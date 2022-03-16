@@ -1,10 +1,11 @@
+using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class BuildingGrid : MonoBehaviour
 {
-    private Vector2Int _gridSize = new Vector2Int(1000, 1000);
+    private Vector2Int _gridSize = new (1000, 1000);
     private static (Building, BuildingPresenterOnButton) _flyingBuilding;
     private bool _avalableToBuild;
 
@@ -57,9 +58,18 @@ public class BuildingGrid : MonoBehaviour
     {
         Vector3 worldPosition = ray.GetPoint(position);
 
+        Action<float> rotateBuilding = x => _flyingBuilding.Item1.transform.Rotate(new Vector3(0, x));
+        float angel = 90;
+
         x = Mathf.RoundToInt(worldPosition.x);
         y = Mathf.RoundToInt(worldPosition.z);
         _flyingBuilding.Item1.transform.position = new Vector3(x, 0, y);
+
+        if (Input.GetKeyDown(KeyCode.Z))
+            rotateBuilding(-angel);
+
+        if (Input.GetKeyDown(KeyCode.X))
+            rotateBuilding(angel);
     }
 
     private void PlaceBuilding(bool avalableToBuild)

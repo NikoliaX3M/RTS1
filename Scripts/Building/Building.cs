@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(BoxCollider))]
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(NavMeshObstacle))]
 public class Building : MonoBehaviour
 {
     [SerializeField] private GameObject _goodState;
@@ -75,7 +78,7 @@ public class Building : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit()
     {
         _inContactAnotherBuilding = false;
     }
